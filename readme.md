@@ -8,8 +8,8 @@
 -p 8080:80
 ```
 
-rechte Seite: Port der Host Maschine <br>
-linke Seite: Port des Containers <br>
+linke Seite: Port der Host Maschine <br>
+rechte Seite: Port des Containers <br>
 
 <br>
 
