@@ -63,6 +63,23 @@ $ docker container logs CONTAINER_NAME
 
 Gibt die logs des Containers aus.
 
+### Inspizieren von Containern
+
+```console
+$ docker container stats CONTAINER_NAME
+```
+
+Zeigt die von dem Container derzeit genutzten Ressourcen an.
+
+<br>
+
+
+```console
+$ docker container inspect CONTAINER_NAME
+```
+
+Gibt die sämtlichen Metadaten aus darüber wie der Container erstellt wurde.
+
 ## Notizen
 
 ### Port vergabe
