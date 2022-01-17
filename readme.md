@@ -1,7 +1,6 @@
 # Docker Mastery
 
-Inhaltsverzeichnis:
-
+[Container](#container)
 [Notizen](#notizen)
 
 ## Container
@@ -24,6 +23,25 @@ $ docker container run -d --name webhost -p 80:80 nginx:latest
 ```
 
 :latest gibt die Version des nginx images an (später dazu mehr).
+
+### Wichtige CLI-Befehle
+
+```console
+$ docker container ls 
+```
+Zeigt alle derzeit laufende Container an. Mit der flag -a werden alle Container, auch gestoppt angezeigt.
+
+-------
+
+```console
+$ docker container stop CONTAINER_NAME
+```
+
+Stopt den Container mit dem angegebenen Namen.
+
+-------
+
+
 
 ## Notizen
 
