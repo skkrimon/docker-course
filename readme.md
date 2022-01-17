@@ -26,6 +26,8 @@ $ docker container run -d --name webhost -p 80:80 nginx:latest
 
 ### Wichtige CLI-Befehle
 
+-------
+
 ```console
 $ docker container ls 
 ```
@@ -65,6 +67,8 @@ Gibt die logs des Containers aus.
 
 ### Inspizieren von Containern
 
+--------
+
 ```console
 $ docker container stats CONTAINER_NAME
 ```
@@ -79,6 +83,17 @@ $ docker container inspect CONTAINER_NAME
 ```
 
 Gibt die sämtlichen Metadaten aus darüber wie der Container erstellt wurde.
+
+### Mit Containern interagieren
+
+Zum interagieren mit Containern wird kein SSH benötigt. <br>
+Folgender Befehl startet eine interaktive Shell im Container:
+
+```console
+$ docker exec -it CONTAINER_NAME
+```
+
+Die flag -it kann auch mit 'docker container run' kombiniert werden um direkt beim erstellen des Containers mit diesem zu interagieren.
 
 ## Notizen
 
