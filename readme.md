@@ -90,10 +90,10 @@ Zum interagieren mit Containern wird kein SSH benötigt. <br>
 Folgender Befehl startet eine interaktive Shell im Container:
 
 ```console
-$ docker exec -it CONTAINER_NAME
+$ docker exec -it CONTAINER_NAME bash
 ```
 
-Die flag -it kann auch mit 'docker container run' kombiniert werden um direkt beim erstellen des Containers mit diesem zu interagieren.
+Die flag -it kann auch mit *docker container run* kombiniert werden um direkt beim erstellen des Containers mit diesem zu interagieren. *Bash* ist die Shell die im Container gestartet wird (Bash ist für gewöhnlich in fast jedem Container installiert und kann somit genutzt werden).
 
 ## Notizen
 
