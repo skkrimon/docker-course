@@ -1,6 +1,6 @@
 # Docker Mastery
 
-[Container](#container)
+[Container](#container)<br>
 [Notizen](#notizen)
 
 ## Container
@@ -40,6 +40,12 @@ $ docker container stop CONTAINER_NAME
 Stopt den Container mit dem angegebenen Namen.
 
 -------
+
+```console
+$ docker rm CONTAINER_NAME
+```
+
+Entfernt unwiderruflich den Container mit dem angegeben Name. Der Container muss dafür bereits gestoppt sein, dies kann allerdings mit der flag -f umgangen werden.
 
 
 
