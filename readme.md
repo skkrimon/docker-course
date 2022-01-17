@@ -31,7 +31,7 @@ $ docker container ls
 ```
 Zeigt alle derzeit laufende Container an. Mit der flag -a werden alle Container, auch gestoppt angezeigt.
 
--------
+<br>
 
 ```console
 $ docker container stop CONTAINER_NAME
@@ -39,7 +39,7 @@ $ docker container stop CONTAINER_NAME
 
 Stopt den Container mit dem angegebenen Namen.
 
--------
+<br>
 
 ```console
 $ docker rm CONTAINER_NAME
@@ -47,7 +47,21 @@ $ docker rm CONTAINER_NAME
 
 Entfernt unwiderruflich den Container mit dem angegeben Name. Der Container muss dafür bereits gestoppt sein, dies kann allerdings mit der flag -f umgangen werden.
 
+<br>
 
+```console
+$ docker container top CONTAINER_NAME
+```
+
+Zeigt einige Informationen über den angegebenen Container an.
+
+<br>
+
+```console
+$ docker container logs CONTAINER_NAME
+```
+
+Gibt die logs des Containers aus.
 
 ## Notizen
 
