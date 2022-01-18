@@ -227,6 +227,16 @@ COPY index.html index.html
 - Volumes: spezieller Ort außerhalb des filesystem des Containers
 - Bind Mounts: Verlinkung von Container Paths mit Host Paths
 
+Konfigurations Beispiel in Dockerfile:
+
+<pre>
+...
+
+VOLUME /var/lib/mysql
+
+...
+</pre>
+
 ### Named Volumes
 
 Wird nichts genauers angegeben werden volumes standardmäßig mit einem zufällig Namen generiert.
