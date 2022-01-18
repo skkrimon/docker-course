@@ -154,6 +154,11 @@ FROM node:latest
 COPY . .
 </pre>
 
+```docker
+FROM node:latest
+COPY . .
+```
+
 ## Notizen
 
 ### Port vergabe
