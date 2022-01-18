@@ -14,6 +14,12 @@
     - [Tags](#tags)
     - [Erstellen von Images](#erstellen-von-images)
     - [Build Images](#build-images)
+    - [Extending Images](#extending-images)
+- [this shows how we can extend/change an existing official image from Docker Hub](#this-shows-how-we-can-extendchange-an-existing-official-image-from-docker-hub)
+- [highly recommend you always pin versions for anything beyond dev/learn](#highly-recommend-you-always-pin-versions-for-anything-beyond-devlearn)
+- [change working directory to root of nginx webhost](#change-working-directory-to-root-of-nginx-webhost)
+- [using WORKDIR is preferred to using 'RUN cd /some/path'](#using-workdir-is-preferred-to-using-run-cd-somepath)
+- [I don't have to specify EXPOSE or CMD because they're in my FROM](#i-dont-have-to-specify-expose-or-cmd-because-theyre-in-my-from)
   - [Notizen](#notizen)
     - [Port vergabe](#port-vergabe)
 
@@ -186,6 +192,27 @@ CMD ["nginx", "-g", "daemon off"]       // required: run this command when conai
 ```console
 $ docker image build -t TAG .
 ```
+
+Docker verfügt über einen sehr mächtigen Cache, was bedeutet, dass beim rebuilden eines images nur die veränderten Zeilen und die darauf folgenden ausgeführt werden, deshalb ist es best practice die Befehle die sich selten ändern am Anfang zu schreiben und später die die sich häufiger ändern.
+
+### Extending Images
+
+[Beispiel](01_images/dockerfile-sample-2/Dockerfile)
+
+<pre>
+# this shows how we can extend/change an existing official image from Docker Hub
+
+FROM nginx:latest
+# highly recommend you always pin versions for anything beyond dev/learn
+
+WORKDIR /usr/share/nginx/html
+# change working directory to root of nginx webhost
+# using WORKDIR is preferred to using 'RUN cd /some/path'
+
+COPY index.html index.html
+
+# I don't have to specify EXPOSE or CMD because they're in my FROM
+</pre>
 
 ## Notizen
 
