@@ -231,7 +231,7 @@ COPY index.html index.html
 
 Wird nichts genauers angegeben werden volumes standardmäßig mit einem zufällig Namen generiert.
 
-[!](assets/img/named_volumes_1.PNG)
+![named volumes image 1](assets/img/named_volumes_1.PNG)
 
 # Docker Compose
 
