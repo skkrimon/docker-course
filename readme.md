@@ -18,6 +18,7 @@
   - [Volumes](#volumes)
     - [Container Lifetime & Persistent Data](#container-lifetime--persistent-data)
     - [Named Volumes](#named-volumes)
+    - [Bind Mounts](#bind-mounts)
 - [Docker Compose](#docker-compose)
 - [Docker Swarm](#docker-swarm)
 - [Kubernetes](#kubernetes)
@@ -185,7 +186,7 @@ RUN apt-get update \
 
 EXPOSE 80 443                           // exposes the ports to the host machine
 
-CMD ["nginx", "-g", "daemon off"]       // required: run this command when conainer is launched
+CMD ["nginx", "-g", "daemon off"]       // required: run this command when container is launched
                                         // only one cmd allowed per Dockerfile
 </pre>
 
@@ -248,6 +249,30 @@ Das Schema lautet dabei 'VOLUME_NAME:VOLUME_PATH_CONTAINER'.
 
 ![named volumes image 2](assets/img/named_volumes_2.PNG)
 
+### Bind Mounts
+
+- Mapped eine Host Datei oder Ordner auf eine Container Datei oder Ordner
+- Im Prinzip zwei Ort die auf die selbe Datei zeigen
+- Kann *nicht* in der Dockerfile angegeben werden, sondern muss bei *Container run* angegeben werden
+- ... container run -v HOST_PATH:CONTAINER_PATH
+
+```console
+$ docker run -v //c/Users/username/stuff:/path/container    // windows
+$ docker run -v /Users/username/stuff:/path/container       // mac/linux
+```
+
+Einfach ist es mit folgendem Befehl:
+
+```powershell
+$ docker run -v ${pwd}:/path/container                      // windows
+```
+
+```bash
+$ docker run -v $(pwd):/path/container                      // mac/linux
+```
+
+Dafür muss man sich jedoch mit der Konsole im gewünschten Host Verzeichnis befinden.
+
 # Docker Compose
 
 # Docker Swarm
@@ -274,6 +299,7 @@ Der Container wäre also über 127.0.0.1:80 erreichbar.
 ```console
 $ docker system prune
 $ docker image prune
+$ docker volume prune
 ```
 
 Mit --help können weitere Infos zu breinigen ausgegeben werden.
