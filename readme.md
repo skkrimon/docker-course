@@ -98,7 +98,24 @@ $ docker exec -it CONTAINER_NAME bash
 
 Die flag -it kann auch mit *docker container run* kombiniert werden um direkt beim erstellen des Containers mit diesem zu interagieren. *Bash* ist die Shell die im Container gestartet wird (Bash ist für gewöhnlich in fast jedem Container installiert und kann somit genutzt werden).
 
-## Docker Networks
+## Docker Netzwerke
+
+- Jeder Container verbindet sich mit einem privaten Virtuellen Netzwerk 'bridged'.
+- Jedes virtuelle Netzwerk nutzt die Firewall des Hosts.
+- Alle Container des selben virtuellen Netzwerks können miteinander kommunizieren, ohne das weiter Ports mit -p gemappt werden.
+- Best practice ist, für jede App ein neues Netzwerk zu erstellen
+    - Netzwerk 'my_web_app' für mysql und php/apache Container.
+    - Netzwerk 'my_api' für mongodb und nodejs Container.
+
+### CLI-Management
+
+```console
+$ docker network ls                 //Netzwerke anzeigen
+$ docker netwrok inspect            //Netzwerke inspizieren
+$ docker network create --driver    //neues Netzwerk erstellen
+$ docker network connect            //Netzwerk zu container hinzufügen
+$ docker network disconnect         //Netzwerk von container entfernen
+```
 
 ## Notizen
 
