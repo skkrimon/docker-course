@@ -1,9 +1,21 @@
-# Docker Mastery
+# Docker
 
-[Container](#container)<br>
-[Netzwerke](#docker-netzwerke)<br>
-[Images](#images)<br>
-[Notizen](#notizen)
+- [Docker](#docker)
+  - [Container](#container)
+    - [Erstellen eines Containers](#erstellen-eines-containers)
+    - [Wichtige CLI-Befehle](#wichtige-cli-befehle)
+    - [Inspizieren von Containern](#inspizieren-von-containern)
+    - [Mit Containern interagieren](#mit-containern-interagieren)
+  - [Docker Netzwerke](#docker-netzwerke)
+    - [CLI-Management](#cli-management)
+    - [DNS](#dns)
+    - [DNS Round Robin](#dns-round-robin)
+  - [Images](#images)
+    - [Tags](#tags)
+    - [Erstellen von Images](#erstellen-von-images)
+    - [Build Images](#build-images)
+  - [Notizen](#notizen)
+    - [Port vergabe](#port-vergabe)
 
 ## Container
 
@@ -133,7 +145,7 @@ $ docker container run -d -p 3306:3306 --name database --network web_app mysql
 
 Verbindung von webhost und database mittels Doctrine als beispiel 'mysql://user:password@web_app/db_name'
 
-### Round Robin
+### DNS Round Robin
 
 Mit '--network-alias' kann dem Container zusätzlicher DNS vergeben werden. Es können mehrere Container im selben Netzwerk den gleichen alias haben. Somit kann die Lastverteilung per DNS (Round Robin) genutzt werden.
 
@@ -156,9 +168,24 @@ $ docker image tag SOUCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]
 ### Erstellen von Images
 
 <pre>
-FROM node:latest
-COPY . .
+FROM debian:jessie                      // required: specifies the base image
+
+ENV NGINX_VERSION 1.11.10-1~jessie      // sets env variables
+
+RUN apt-get update \
+    && apt-get install ...              // runs shell commands inside the container
+
+EXPOSE 80 443                           // exposes the ports to the host machine
+
+CMD ["nginx", "-g", "daemon off"]       // required: run this command when conainer is launched
+                                        // only one cmd allowed per Dockerfile
 </pre>
+
+### Build Images
+
+```console
+$ docker image build -t TAG .
+```
 
 ## Notizen
 
