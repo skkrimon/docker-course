@@ -233,6 +233,11 @@ Wird nichts genauers angegeben werden volumes standardmäßig mit einem zufälli
 
 ![named volumes image 1](assets/img/named_volumes_1.PNG)
 
+Für die Übersicht und um besser damit arbeiten zu können, kann dem volume ein bestimmter Name gegeben werden.
+Das Schema lautet dabei 'VOLUME_NAME:VOLUME_PATH_CONTAINER'.
+
+![named volumes image 2](assets/img/named_volumes_2.PNG)
+
 # Docker Compose
 
 # Docker Swarm
