@@ -15,8 +15,11 @@
     - [Erstellen von Images](#erstellen-von-images)
     - [Build Images](#build-images)
     - [Extending Images](#extending-images)
-  - [Notizen](#notizen)
-    - [Port vergabe](#port-vergabe)
+- [Docker Compose](#docker-compose)
+- [Docker Swarm](#docker-swarm)
+- [Kubernetes](#kubernetes)
+- [Notizen](#notizen)
+  - [Port vergabe](#port-vergabe)
 
 ## Container
 
@@ -209,9 +212,15 @@ COPY index.html index.html
 // I don't have to specify EXPOSE or CMD because they're in my FROM
 </pre>
 
-## Notizen
+# Docker Compose
 
-### Port vergabe
+# Docker Swarm
+
+# Kubernetes
+
+# Notizen
+
+## Port vergabe
 
 ```console
 -p 8080:80
