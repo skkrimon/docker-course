@@ -15,11 +15,15 @@
     - [Erstellen von Images](#erstellen-von-images)
     - [Build Images](#build-images)
     - [Extending Images](#extending-images)
+  - [Volumes](#volumes)
+    - [Container Lifetime & Persistent Data](#container-lifetime--persistent-data)
+    - [Named Volumes](#named-volumes)
 - [Docker Compose](#docker-compose)
 - [Docker Swarm](#docker-swarm)
 - [Kubernetes](#kubernetes)
 - [Notizen](#notizen)
   - [Port vergabe](#port-vergabe)
+  - [System bereinigen](#system-bereinigen)
 
 ## Container
 
@@ -212,6 +216,23 @@ COPY index.html index.html
 // I don't have to specify EXPOSE or CMD because they're in my FROM
 </pre>
 
+## Volumes
+
+### Container Lifetime & Persistent Data
+
+- Normalerweise sind Container unveränderlich (immutable) und flüchtig (ephemeral)
+- "immutable infrastructure": container werden nur neu deployed, nicht verändert
+- problematisch bei beispielweise Datenbanken, da die binaries im Container nicht mit unseren Daten vermischt werden sollten
+- Es gibt zwei Möglichkeiten dieses Problem zu lösen: Volumes & Bind Mounts
+- Volumes: spezieller Ort außerhalb des filesystem des Containers
+- Bind Mounts: Verlinkung von Container Paths mit Host Paths
+
+### Named Volumes
+
+Wird nichts genauers angegeben werden volumes standardmäßig mit einem zufällig Namen generiert.
+
+[!](assets/img/named_volumes_1.PNG)
+
 # Docker Compose
 
 # Docker Swarm
@@ -223,7 +244,7 @@ COPY index.html index.html
 ## Port vergabe
 
 ```console
--p 8080:80
+-p 80:8080
 ```
 
 linke Seite: Port der Host Maschine <br>
@@ -231,4 +252,13 @@ rechte Seite: Port des Containers <br>
 
 <br>
 
-Der Container wäre also über 127.0.0.1:8080 erreichbar.
+Der Container wäre also über 127.0.0.1:80 erreichbar.
+
+## System bereinigen
+
+```console
+$ docker system prune
+$ docker image prune
+```
+
+Mit --help können weitere Infos zu breinigen ausgegeben werden.
