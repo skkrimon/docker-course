@@ -1,7 +1,8 @@
 # Docker Mastery
 
 [Container](#container)<br>
-[Docker Networks](#docker-networks)<br>
+[Netzwerke](#docker-netzwerke)<br>
+[Images](#images)<br>
 [Notizen](#notizen)
 
 ## Container
@@ -100,22 +101,51 @@ Die flag -it kann auch mit *docker container run* kombiniert werden um direkt be
 
 ## Docker Netzwerke
 
-- Jeder Container verbindet sich mit einem privaten Virtuellen Netzwerk 'bridged'.
+- Jeder Container verbindet sich mit einem privaten Virtuellen Netzwerk 'bridge'.
 - Jedes virtuelle Netzwerk nutzt die Firewall des Hosts.
 - Alle Container des selben virtuellen Netzwerks können miteinander kommunizieren, ohne das weiter Ports mit -p gemappt werden.
-- Best practice ist, für jede App ein neues Netzwerk zu erstellen
+- Best practice ist für jede App ein neues Netzwerk zu erstellen:
     - Netzwerk 'my_web_app' für mysql und php/apache Container.
     - Netzwerk 'my_api' für mongodb und nodejs Container.
 
 ### CLI-Management
 
 ```console
-$ docker network ls                 //Netzwerke anzeigen
-$ docker netwrok inspect            //Netzwerke inspizieren
-$ docker network create --driver    //neues Netzwerk erstellen
-$ docker network connect            //Netzwerk zu container hinzufügen
-$ docker network disconnect         //Netzwerk von container entfernen
+$ docker network ls                 // Netzwerke anzeigen
+$ docker netwrok inspect            // Netzwerke inspizieren
+$ docker network create --driver    // neues Netzwerk erstellen
+$ docker network connect            // Netzwerk zu container hinzufügen
+$ docker network disconnect         // Netzwerk von container entfernen
 ```
+
+### DNS
+
+Befinden sich zwei Container im selben Netzwerk ist es ein Anti Pattern diese mit der jeweiligen IP anzusprechen.
+Die beiden Container können mittels des jeweiligen Container Namens kommunizieren.
+<br>
+Beispiel:
+
+```console
+$ docker network create web_app
+$ docker container run -d -p 80:80 --name webhost --network web_app nginx
+$ docker container run -d -p 3306:3306 --name database --network web_app mysql
+```
+
+Verbindung von webhost und database mittels Doctrine als beispiel 'mysql://user:password@web_app/db_name'
+
+### Round Robin
+
+Mit '--network-alias' kann dem Container zusätzlicher DNS vergeben werden. Es können mehrere Container im selben Netzwerk den gleichen alias haben. Somit kann die Lastverteilung per DNS (Round Robin) genutzt werden.
+
+## Images
+
+Images enthalten die binaries und dependencies der App. Images enthalten *keinen* Kernel, dieser kommt vom Hosts System. Deswegen wird auch unter Windows beispielsweise WSL benötigt um Docker zu nutzen.
+Die größte Quelle an Images ist [Docker Hub](hub.docker.com). Eigene Images können auch auf Docker Hub hochgeladen werden. Offizielle Images haben nur einen Namen. Images von Usern haben vorher noch den Username (USERNAME/IMAGENAME).
+
+### Tags
+
+Für gewöhnlich (vorallem bei offiziellen) habe Images verschiedene Tags. Diese geben beispielsweise an welche Version der Software im jeweiligen Image genutzt wird oder welches Image als Basis verwendet wird.
+Somit kann man sicher gehen, dass die Software im auf dem Stand ist wie angegeben. Wird kein Tag angegeben wird das latest, sprich das aktuellste Image verwendet.:
 
 ## Notizen
 
