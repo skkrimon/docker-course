@@ -145,7 +145,13 @@ Die größte Quelle an Images ist [Docker Hub](hub.docker.com). Eigene Images k�
 ### Tags
 
 Für gewöhnlich (vorallem bei offiziellen) habe Images verschiedene Tags. Diese geben beispielsweise an welche Version der Software im jeweiligen Image genutzt wird oder welches Image als Basis verwendet wird.
-Somit kann man sicher gehen, dass die Software im auf dem Stand ist wie angegeben. Wird kein Tag angegeben wird das latest, sprich das aktuellste Image verwendet.:
+Somit kann man sicher gehen, dass die Software im auf dem Stand ist wie angegeben. Wird kein Tag angegeben wird das latest, sprich das aktuellste Image verwendet.<br>
+
+Retag Images:
+
+```console
+$ docker image tag SOUCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]
+```
 
 ### Erstellen von Images
 
@@ -153,11 +159,6 @@ Somit kann man sicher gehen, dass die Software im auf dem Stand ist wie angegebe
 FROM node:latest
 COPY . .
 </pre>
-
-```docker
-FROM node:latest
-COPY . .
-```
 
 ## Notizen
 
