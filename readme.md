@@ -7,6 +7,7 @@
 - [Docker Compose](#docker-compose)
 - [Docker Swarm](#docker-swarm)
 - [Kubernetes](#kubernetes)
+- [Notizen](#notizen)
 
 # Docker
 
@@ -429,6 +430,7 @@ volumes:
 - [Docker Swarm aktivieren](#docker-swarm-aktivieren)
 - [Erstellen eines 3-Node Swarm](#erstellen-eines-3-node-swarm)
 - [Overlay Networking](#overlay-networking)
+- [Routing Mesh](#routing-mesh)
 
 -------
 
@@ -469,6 +471,23 @@ Mit `docker service ls` bekommen wir die Services aufgelistet
 Wenn wir `docker node ps node2` ausführen, wird aufgelistet welche Tasks auf dem jeweils angegebenen Node läuft. `docker service ps SERVICE_NAME` zeigt alle Tasks des jeweiligen Service an und auf welchem Node sie laufen.
 
 ## Overlay Networking
+
+- Bei erstellen eines Networks einfach `--driver overlay` angeben
+- Verwendung für container-to-container traffic innerhalb eines Swarms
+- Jeder Service kann sich mit keinem, einen oder mehreren Netzwerken verbinden
+
+## Routing Mesh
+
+- Routet eingehende Pakete für einen Service zum entsprechenden Task
+- Spannt sich über alle Nodes im Swarm
+- Nutzt IPVS des Linux Kernels ([Wikipedia](https://en.wikipedia.org/wiki/IP_Virtual_Server))
+- Funktioniert auf zwei Arten:
+  - Container zu Container innerhalb eines overlay networks
+  - Externer eingehender traffic auf einen offenen Port
+
+Einfach ausgedrückt: wenn wir uns mit einem Task verbinden wollen, müssen wir nur die IP von einem beliebigen Node angeben, es ist egal in welchem Node der Task läuft.
+
+Damit kommt es jedoch auch dazu, dass der load balancer von Swarm uns bei mehreren Anfragen auf unterschiedliche Tasks routet (da es sich um einen OSi-Layer 3 load balancer handelt). Um dieses Problem zu beheben wird noch ein zusätzlicher proxy load balancer (OSi-Layer 4) benötigt. Dieses Problem tritt nur auf wenn es von einem Service mehrere Replicas gibt.
 
 # Kubernetes
 
