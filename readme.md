@@ -275,6 +275,15 @@ Dafür muss man sich jedoch mit der Konsole im gewünschten Host Verzeichnis bef
 
 # Docker Compose
 
+- konfigurieren der Beziehungen zwischen Containern
+- speicher von `docker container run` Einstellungen in einer leicht verständlichen Datei
+- Besteht aus zwei seperaten aber verbundenen Teilen
+  - 1. YAML Konfiguartionsdatei welche folgende Teile der Konfiguration beschreibt:
+    - Container
+    - Networks
+    - Volumes
+  - 2. docker-compose CLI tool zum verarbeiten der YAML Dateien
+
 # Docker Swarm
 
 # Kubernetes
