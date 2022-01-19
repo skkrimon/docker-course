@@ -10,6 +10,7 @@
 
 # Docker
 
+<!-- no toc -->
 - [Container](#container)
   - [Erstellen eines Containers](#erstellen-eines-containers)
   - [Wichtige CLI-Befehle](#wichtige-cli-befehle)
@@ -28,7 +29,6 @@
   - [Container Lifetime & Persistent Data](#container-lifetime--persistent-data)
   - [Named Volumes](#named-volumes)
   - [Bind Mounts](#bind-mounts)
-
 
 ## Container
 
@@ -279,7 +279,7 @@ Dafür muss man sich jedoch mit der Konsole im gewünschten Host Verzeichnis bef
 
 # Docker Compose
 
-- [Übersicht](#übersicht)
+- [Übersicht Docker Compose](#übersicht-docker-compose)
 - [docker-compose.yml](#docker-composeyml)
 - [docker-compose CLI](#docker-compose-cli)
 - [Beispiel Konfiguration](#beispiel-konfiguration)
@@ -288,7 +288,7 @@ Dafür muss man sich jedoch mit der Konsole im gewünschten Host Verzeichnis bef
 
 -------
 
-## Übersicht
+## Übersicht Docker Compose
 
 - konfigurieren der Beziehungen zwischen Containern
 - speicher von `docker container run` Einstellungen in einer leicht verständlichen Datei
@@ -424,6 +424,51 @@ volumes:
 ```
 
 # Docker Swarm
+
+- [Übersicht Docker Swarm](#übersicht-docker-swarm)
+- [Docker Swarm aktivieren](#docker-swarm-aktivieren)
+- [Erstellen eines 3-Node Swarm](#erstellen-eines-3-node-swarm)
+- [Overlay Networking](#overlay-networking)
+
+-------
+
+## Übersicht Docker Swarm
+
+- Swarm Mode ist eine Cluster Lösung die in Docker mit eingebaut ist
+- Swarm ist standartmäßig nicht aktiviert
+- Wird es aktiviert bietet es Zugriff auf folgende Befehle:
+  - docker swarm
+  - docker node
+  - docker service
+  - docker stack
+  - docker secret
+  
+![How nodes work](https://docs.docker.com/engine/swarm/images/swarm-diagram.png)
+
+## Docker Swarm aktivieren
+
+Swarm kann mit `docker swarm init` aktiviert werden.
+
+## Erstellen eines 3-Node Swarm
+
+Nachdem im ersten Node swarm initalisiert wurde erscheint folgende Ausgabe im Terminal:
+
+![swarm 1](assets/img/swarm_1.PNG)
+
+Der in der mitte stehende Befehl kann nun in den anderen beiden Nodes ausgeführt werden um diese zum Cluster hinzuzufügen. Mit `docker node promote node2 node3` werden die anderen beiden Nodes zum Manager. <br>
+
+Mit `docker node ls` bekommen wir die Nodes des swarm clusters aufgelistet.
+
+Als nächstes fügen wir einen Service mit 3 Tasks hinzu.
+
+```console
+$ docker service create --replicas 3 alpine ping 8.8.8.8
+```
+Mit `docker service ls` bekommen wir die Services aufgelistet
+
+Wenn wir `docker node ps node2` ausführen, wird aufgelistet welche Tasks auf dem jeweils angegebenen Node läuft. `docker service ps SERVICE_NAME` zeigt alle Tasks des jeweiligen Service an und auf welchem Node sie laufen.
+
+## Overlay Networking
 
 # Kubernetes
 
