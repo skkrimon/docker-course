@@ -23,6 +23,8 @@
   - [docker-compose.yml](#docker-composeyml)
   - [docker-compose CLI](#docker-compose-cli)
   - [Beispiel Konfiguration](#beispiel-konfiguration)
+  - [Build Images mit Compose](#build-images-mit-compose)
+    - [Beispiel](#beispiel)
 - [Docker Swarm](#docker-swarm)
 - [Kubernetes](#kubernetes)
 - [Notizen](#notizen)
@@ -319,8 +321,7 @@ Eine genaue Beschreibung sämtlicher Keywords findet man in der offiziellen [Dok
 
 Die meist genutzten Befehle sind `docker-compose up` und `docker-compose down`.
 
-`docker-compose up` erstellt die volumes/networks und startet alle Container. Die flag -d kann wie bei container run angegeben werden um im dettach mode zu starten. 
-
+`docker-compose up` erstellt die volumes/networks und startet alle Container. Die flag -d kann wie bei container run angegeben werden um im dettach mode zu starten.
 
 `docker-compose down` stoppt alle Container und entfernt die Container/Volumes/Networks.
 
@@ -337,18 +338,32 @@ services:
     ports:
       - '8080:80'
     volumes:
-      - /var/www/html/modules
-      - /var/www/html/profiles
-      - /var/www/html/themes
-      - /var/www/html/sites
+      - drupal-modules:/var/www/html/modules
+      - durpal-profiles:/var/www/html/profiles
+      - drupal-themes:/var/www/html/themes
+      - drupal-sites:/var/www/html/sites
 
   database:
     image: postgres
     environment:
       - POSTGRES_PASSWORD=123456
+
+volumes:
+  drupal-modules:
+  durpal-profiles:
+  drupal-themes:
+  drupal-sites:
 ```
 
 *Hinweis:* für die Datenbank muss in diesem Fall kein Port angegeben werden, da nur der drupal Container mit dieser interagiert. Es kann also bei der Konfiguration von drupal einfach der DNS der Datenbank angegeben werden als Addresse und der Standart Postgres Port. Würde man jetzt vom Host System aus auch mit der Datenbank kommunizieren wollen, müsste man auch einen Port mitangeben.
+
+## Build Images mit Compose
+
+- Compose kann auch eigene Images bauen
+- Werden automatisch gebaut wenn `docker-compose up` ausgeführt wird
+- Können auch mit `docker-compose build` manuell gebaut werden
+
+### Beispiel
 
 # Docker Swarm
 
