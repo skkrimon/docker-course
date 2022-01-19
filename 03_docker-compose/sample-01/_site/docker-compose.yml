@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  jekyll:
+    image: jekyll/jekyll:latest
+    volumes:
+      - .:/srv/jekyll
+    ports:
+      - '80:4000'
+    command: jekyll serve

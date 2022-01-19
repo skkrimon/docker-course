@@ -21,6 +21,10 @@
     - [Bind Mounts](#bind-mounts)
 - [Docker Compose](#docker-compose)
   - [docker-compose.yml](#docker-composeyml)
+  - [docker-compose CLI](#docker-compose-cli)
+    - [docker-compose up](#docker-compose-up)
+    - [docker-compose down](#docker-compose-down)
+    - [docker-compose stop](#docker-compose-stop)
 - [Docker Swarm](#docker-swarm)
 - [Kubernetes](#kubernetes)
 - [Notizen](#notizen)
@@ -289,7 +293,7 @@ Dafür muss man sich jedoch mit der Konsole im gewünschten Host Verzeichnis bef
 
 ## docker-compose.yml
 
-Beispiel für eine docker-compose file:
+Aufbau einer docker-compose Datei:
 
 ```yaml
 version: 3.1
@@ -309,6 +313,24 @@ services:       # container, indentisch zu docker run
 
   networks:     # optinal, indentisch zu docker network create 
 ```
+
+Eine genaue Beschreibung sämtlicher Keywords findet man in der offiziellen [Dokumentation](https://docs.docker.com/compose/).
+
+## docker-compose CLI
+
+Die meist genutzten Befehle sind `docker-compose up` und `docker-compose down`.
+
+### docker-compose up
+
+Erstellt die volumes/networks und startet alle Container.
+
+### docker-compose down
+
+Stoppt alle Container und entfernt die Container/Volumes/Networks.
+
+### docker-compose stop
+
+Stoppt alle Container ohne diese zu entfernen.
 
 # Docker Swarm
 
