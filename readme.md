@@ -20,6 +20,7 @@
     - [Named Volumes](#named-volumes)
     - [Bind Mounts](#bind-mounts)
 - [Docker Compose](#docker-compose)
+  - [docker-compose.yml](#docker-composeyml)
 - [Docker Swarm](#docker-swarm)
 - [Kubernetes](#kubernetes)
 - [Notizen](#notizen)
@@ -283,6 +284,31 @@ Dafür muss man sich jedoch mit der Konsole im gewünschten Host Verzeichnis bef
     - Networks
     - Volumes
   - docker-compose CLI tool zum verarbeiten der YAML Dateien
+
+*docker-compose ist hauptsächlich für lokale Entwicklung konzipiert, in der Produktion kann es jedoch mit docker swarm genutzt werden.*
+
+## docker-compose.yml
+
+Beispiel für eine docker-compose file:
+
+```yaml
+version: 3.1
+# wird keine Version angegeben, wird automatisch v1 verwendet
+# empfohlene Version ist mindesten v2 
+
+services:       # container, indentisch zu docker run
+  servicename:  # DNS name innerhalb des Netzwerks
+    image:      # optional wenn build verwendet wird
+    command:    # optional, ersetzt standard CMD des images
+    enviorment: # optional, indentisch zu -e bei docker run
+    volumes:    # optional, indentisch zu -v bei docker run
+  servicename2: 
+    ...
+  
+  volumes:      # optinal, indentisch zu docker volume create
+
+  networks:     # optinal, indentisch zu docker network create 
+```
 
 # Docker Swarm
 
