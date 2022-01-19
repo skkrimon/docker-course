@@ -296,7 +296,7 @@ Aufbau einer docker-compose Datei:
 ```yaml
 version: 3.1
 # wird keine Version angegeben, wird automatisch v1 verwendet
-# empfohlene Version ist mindesten v2 
+# empfohlen ist mindestens v2 zu nutzen
 
 services:       # container, indentisch zu docker run
   servicename:  # DNS name innerhalb des Netzwerks
@@ -304,12 +304,13 @@ services:       # container, indentisch zu docker run
     command:    # optional, ersetzt standard CMD des images
     enviorment: # optional, indentisch zu -e bei docker run
     volumes:    # optional, indentisch zu -v bei docker run
+    ports:      # optional, indentisch zu -p bei docker run
   servicename2: 
     ...
   
-  volumes:      # optional, indentisch zu docker volume create
+volumes:      # optional, indentisch zu docker volume create
 
-  networks:     # optional, indentisch zu docker network create 
+networks:     # optional, indentisch zu docker network create 
 ```
 
 Eine genaue Beschreibung sämtlicher Keywords findet man in der offiziellen [Dokumentation](https://docs.docker.com/compose/).
@@ -318,23 +319,12 @@ Eine genaue Beschreibung sämtlicher Keywords findet man in der offiziellen [Dok
 
 Die meist genutzten Befehle sind `docker-compose up` und `docker-compose down`.
 
-```console
-$ docker-compose up
-```
+`docker-compose up` erstellt die volumes/networks und startet alle Container. Die flag -d kann wie bei container run angegeben werden um im dettach mode zu starten. 
 
-Erstellt die volumes/networks und startet alle Container. Die flag -d kann wie bei container run angegeben werden um im dettach mode zu starten. <br>
 
-```console
-$ docker-compose down
-```
+`docker-compose down` stoppt alle Container und entfernt die Container/Volumes/Networks.
 
-Stoppt alle Container und entfernt die Container/Volumes/Networks. <br>
-
-```console
-$ docker-compose stop
-```
-
-Stoppt alle Container ohne diese zu entfernen. Vorallem nützlich wenn die Container im dettach mode laufen.
+`docker-compose stop` stoppt alle Container ohne diese zu entfernen. Vorallem nützlich wenn die Container im dettach mode laufen.
 
 ## Beispiel Konfiguration
 
