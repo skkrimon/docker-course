@@ -94,7 +94,7 @@ Gibt die logs des Containers aus.
 
 ### Inspizieren von Containern
 
---------
+-------
 
 ```console
 $ docker container stats CONTAINER_NAME
