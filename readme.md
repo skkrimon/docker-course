@@ -1,6 +1,15 @@
-# Docker
+# Docker Mastery
+
+
+## Content
 
 - [Docker](#docker)
+- [Docker Compose](#docker-compose)
+- [Docker Swarm](#docker-swarm)
+- [Kubernetes](#kubernetes)
+
+# Docker
+
   - [Container](#container)
     - [Erstellen eines Containers](#erstellen-eines-containers)
     - [Wichtige CLI-Befehle](#wichtige-cli-befehle)
@@ -19,17 +28,7 @@
     - [Container Lifetime & Persistent Data](#container-lifetime--persistent-data)
     - [Named Volumes](#named-volumes)
     - [Bind Mounts](#bind-mounts)
-- [Docker Compose](#docker-compose)
-  - [docker-compose.yml](#docker-composeyml)
-  - [docker-compose CLI](#docker-compose-cli)
-  - [Beispiel Konfiguration](#beispiel-konfiguration)
-  - [Build Images mit Compose](#build-images-mit-compose)
-    - [Beispiel](#beispiel)
-- [Docker Swarm](#docker-swarm)
-- [Kubernetes](#kubernetes)
-- [Notizen](#notizen)
-  - [Port vergabe](#port-vergabe)
-  - [System bereinigen](#system-bereinigen)
+
 
 ## Container
 
@@ -280,6 +279,17 @@ Dafür muss man sich jedoch mit der Konsole im gewünschten Host Verzeichnis bef
 
 # Docker Compose
 
+- [Übersicht](#übersicht)
+- [docker-compose.yml](#docker-composeyml)
+- [docker-compose CLI](#docker-compose-cli)
+- [Beispiel Konfiguration](#beispiel-konfiguration)
+- [Build Images mit Compose](#build-images-mit-compose)
+  - [Beispiel](#beispiel)
+
+-------
+
+## Übersicht
+
 - konfigurieren der Beziehungen zwischen Containern
 - speicher von `docker container run` Einstellungen in einer leicht verständlichen Datei
 - Besteht aus zwei seperaten aber verbundenen Teilen
@@ -364,6 +374,54 @@ volumes:
 - Können auch mit `docker-compose build` manuell gebaut werden
 
 ### Beispiel
+
+```Dockerfile
+# Dockerfile
+
+FROM drupal:8.8.2
+
+RUN apt-get update \
+    && apt-get install -y git \ 
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /var/www/html/themes
+
+RUN git clone --branch 8.x-3.x --single-branch --depth 1 https://git.drupalcode.org/project/bootstrap.git \
+    && chown -R www-data:www-data bootstrap
+
+WORKDIR /var/www/html
+```
+
+```yaml
+# docker-compose.yml
+
+version: '3'
+
+services:
+  drupal:
+    build: .
+    ports:
+      - '8080:80'
+    volumes:
+      - drupal-modules:/var/www/html/modules
+      - durpal-profiles:/var/www/html/profiles
+      - drupal-themes:/var/www/html/themes
+      - drupal-sites:/var/www/html/sites
+
+  database:
+    image: postgres:12.1
+    environment:
+      - POSTGRES_PASSWORD=123456
+    volumes:
+      - drupal-data:/var/lib/postgresql/data
+
+volumes:
+  drupal-modules:
+  durpal-profiles:
+  drupal-themes:
+  drupal-sites:
+  drupal-data:
+```
 
 # Docker Swarm
 

@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  drupal:
+    build:
+      context: .
+    ports:
+      - '8080:80'
+    volumes:
+      - drupal-modules:/var/www/html/modules
+      - durpal-profiles:/var/www/html/profiles
+      - drupal-themes:/var/www/html/themes
+      - drupal-sites:/var/www/html/sites
+
+  database:
+    image: postgres:12.1
+    environment:
+      - POSTGRES_PASSWORD=123456
+    volumes:
+      - drupal-data:/var/lib/postgresql/data
+
+volumes:
+  drupal-modules:
+  durpal-profiles:
+  drupal-themes:
+  drupal-sites:
+  drupal-data:
