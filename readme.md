@@ -22,9 +22,7 @@
 - [Docker Compose](#docker-compose)
   - [docker-compose.yml](#docker-composeyml)
   - [docker-compose CLI](#docker-compose-cli)
-    - [docker-compose up](#docker-compose-up)
-    - [docker-compose down](#docker-compose-down)
-    - [docker-compose stop](#docker-compose-stop)
+  - [Beispiel Konfiguration](#beispiel-konfiguration)
 - [Docker Swarm](#docker-swarm)
 - [Kubernetes](#kubernetes)
 - [Notizen](#notizen)
@@ -309,9 +307,9 @@ services:       # container, indentisch zu docker run
   servicename2: 
     ...
   
-  volumes:      # optinal, indentisch zu docker volume create
+  volumes:      # optional, indentisch zu docker volume create
 
-  networks:     # optinal, indentisch zu docker network create 
+  networks:     # optional, indentisch zu docker network create 
 ```
 
 Eine genaue Beschreibung sämtlicher Keywords findet man in der offiziellen [Dokumentation](https://docs.docker.com/compose/).
@@ -320,17 +318,47 @@ Eine genaue Beschreibung sämtlicher Keywords findet man in der offiziellen [Dok
 
 Die meist genutzten Befehle sind `docker-compose up` und `docker-compose down`.
 
-### docker-compose up
+```console
+$ docker-compose up
+```
 
-Erstellt die volumes/networks und startet alle Container.
+Erstellt die volumes/networks und startet alle Container. Die flag -d kann wie bei container run angegeben werden um im dettach mode zu starten. <br>
 
-### docker-compose down
+```console
+$ docker-compose down
+```
 
-Stoppt alle Container und entfernt die Container/Volumes/Networks.
+Stoppt alle Container und entfernt die Container/Volumes/Networks. <br>
 
-### docker-compose stop
+```console
+$ docker-compose stop
+```
 
-Stoppt alle Container ohne diese zu entfernen.
+Stoppt alle Container ohne diese zu entfernen. Vorallem nützlich wenn die Container im dettach mode laufen.
+
+## Beispiel Konfiguration
+
+```yaml
+version: '3'
+
+services:
+  drupal:
+    image: drupal
+    ports:
+      - '8080:80'
+    volumes:
+      - /var/www/html/modules
+      - /var/www/html/profiles
+      - /var/www/html/themes
+      - /var/www/html/sites
+
+  database:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=123456
+```
+
+*Hinweis:* für die Datenbank muss in diesem Fall kein Port angegeben werden, da nur der drupal Container mit dieser interagiert. Es kann also bei der Konfiguration von drupal einfach der DNS der Datenbank angegeben werden als Addresse und der Standart Postgres Port. Würde man jetzt vom Host System aus auch mit der Datenbank kommunizieren wollen, müsste man auch einen Port mitangeben.
 
 # Docker Swarm
 
