@@ -245,7 +245,7 @@ Wird nichts genauers angegeben werden volumes standardmäßig mit einem zufälli
 ![named volumes image 1](assets/img/named_volumes_1.PNG)
 
 Für die Übersicht und um besser damit arbeiten zu können, kann dem volume ein bestimmter Name gegeben werden.
-Das Schema lautet dabei 'VOLUME_NAME:VOLUME_PATH_CONTAINER'.
+Das Schema lautet dabei `VOLUME_NAME:VOLUME_PATH_CONTAINER`.
 
 ![named volumes image 2](assets/img/named_volumes_2.PNG)
 
@@ -254,7 +254,7 @@ Das Schema lautet dabei 'VOLUME_NAME:VOLUME_PATH_CONTAINER'.
 - Mapped eine Host Datei oder Ordner auf eine Container Datei oder Ordner
 - Im Prinzip zwei Ort die auf die selbe Datei zeigen
 - Kann *nicht* in der Dockerfile angegeben werden, sondern muss bei *Container run* angegeben werden
-- ... container run -v HOST_PATH:CONTAINER_PATH
+- `docker container run -v HOST_PATH:CONTAINER_PATH`
 
 ```console
 $ docker run -v //c/Users/username/stuff:/path/container    // windows
@@ -278,11 +278,11 @@ Dafür muss man sich jedoch mit der Konsole im gewünschten Host Verzeichnis bef
 - konfigurieren der Beziehungen zwischen Containern
 - speicher von `docker container run` Einstellungen in einer leicht verständlichen Datei
 - Besteht aus zwei seperaten aber verbundenen Teilen
-  - 1. YAML Konfiguartionsdatei welche folgende Teile der Konfiguration beschreibt:
+  - YAML Konfiguartionsdatei welche folgende Teile der Konfiguration beschreibt:
     - Container
     - Networks
     - Volumes
-  - 2. docker-compose CLI tool zum verarbeiten der YAML Dateien
+  - docker-compose CLI tool zum verarbeiten der YAML Dateien
 
 # Docker Swarm
 
