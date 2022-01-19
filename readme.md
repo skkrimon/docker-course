@@ -466,6 +466,7 @@ Als nächstes fügen wir einen Service mit 3 Tasks hinzu.
 ```console
 $ docker service create --replicas 3 alpine ping 8.8.8.8
 ```
+
 Mit `docker service ls` bekommen wir die Services aufgelistet
 
 Wenn wir `docker node ps node2` ausführen, wird aufgelistet welche Tasks auf dem jeweils angegebenen Node läuft. `docker service ps SERVICE_NAME` zeigt alle Tasks des jeweiligen Service an und auf welchem Node sie laufen.
@@ -488,6 +489,8 @@ Wenn wir `docker node ps node2` ausführen, wird aufgelistet welche Tasks auf de
 Einfach ausgedrückt: wenn wir uns mit einem Task verbinden wollen, müssen wir nur die IP von einem beliebigen Node angeben, es ist egal in welchem Node der Task läuft.
 
 Damit kommt es jedoch auch dazu, dass der load balancer von Swarm uns bei mehreren Anfragen auf unterschiedliche Tasks routet (da es sich um einen OSi-Layer 3 load balancer handelt). Um dieses Problem zu beheben wird noch ein zusätzlicher proxy load balancer (OSi-Layer 4) benötigt. Dieses Problem tritt nur auf wenn es von einem Service mehrere Replicas gibt.
+
+## Example Voting App
 
 # Kubernetes
 
@@ -515,3 +518,13 @@ $ docker volume prune
 ```
 
 Mit --help können weitere Infos zu breinigen ausgegeben werden.
+
+## Named Volumes in Docker Swarm
+
+```bash
+# pattern:
+--mount type=volume,source=VOLUME_NAME,target=/path/to/volume
+
+# example:
+--mount type=volume,source=db-data,target=/var/lib/postgresql/data
+```
