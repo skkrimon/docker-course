@@ -434,6 +434,7 @@ volumes:
 - [Example Voting App](#example-voting-app)
   - [Services](#services)
   - [Steps](#steps)
+- [Swarm Stack](#swarm-stack)
 
 -------
 
@@ -541,7 +542,7 @@ Damit kommt es jedoch auch dazu, dass der load balancer von Swarm uns bei mehrer
 $ docker swarm init
 ```
 
-Danach alle Nodes zum Swarm hinzufügen und anschließend die Netzwerke erstellen:
+Danach alle Nodes zum Swarm hinzufügen, zum Manager promoten und anschließend die Netzwerke erstellen:
 
 ```console
 $ docker network create --driver overlay fontend
@@ -563,6 +564,18 @@ $ docker service create --name db --network backend --mount type=volume,source=d
 $ docker service create --name result -p 5001:80 --network backend bretfisher/examplevotingapp_result
 ```
 Danach sollte die Voting App auf Port 80 verfügbar sein und unter Port 5001 das live Ergebniss.
+
+## Swarm Stack
+
+Swarm Stack ist im Prinzip Compose auf der Produktions Ebene.
+
+- Service, Netzwerke und Volumes können in der Compose Datei für Swarm definiert werden
+- Wird mit dem Befehl `docker stack deploy` verwendet
+- build ist nicht verfügbar in den stack compose Dateien, dafür deploy
+- Compose ignoriert deploy, Stack ignoriert build
+- docker-compose CLI wird auf einem Swarm Server nicht benötigt
+
+*build sollte niemals in Produktion stattfinden*
 
 # Kubernetes
 
