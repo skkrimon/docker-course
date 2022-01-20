@@ -437,6 +437,11 @@ volumes:
 - [Swarm Stack](#swarm-stack)
   - [CLI Befehle](#cli-befehle)
   - [Beispiel eines Stacks](#beispiel-eines-stacks)
+- [Swarm Secrets](#swarm-secrets)
+  - [Secret Storage](#secrets-storage)
+  - [Erstellen eines Secrets](#erstellen-eines-secrets)
+    - [Mit einer Datei](#mit-einer-datei)
+    - [Über die Konsole](#über-die-konsole)
 
 -------
 
@@ -721,6 +726,20 @@ volumes:
 - Apps müssen nicht umgebaut werden um diese Funktion zu nutzen
 - Secrets werden erst in Swarm gespeichert und dann dem Service zugewiesen
 - /run/secrets/<secret_name> oder /run/secrets/<secret_alias>
+
+### Erstellen eines Secrets
+
+#### Mit einer Datei
+
+```console
+$ docker secret create SECRET_NAME SECRET_FILE
+```
+
+#### Über die Konsole
+
+```console
+$ echo "SECRET" | docker secret create SECRET_NAME -
+```
 
 # Kubernetes
 
