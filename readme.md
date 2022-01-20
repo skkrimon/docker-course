@@ -432,6 +432,8 @@ volumes:
 - [Overlay Networking](#overlay-networking)
 - [Routing Mesh](#routing-mesh)
 - [Example Voting App](#example-voting-app)
+  - [Services](#services)
+  - [Steps](#steps)
 
 -------
 
@@ -492,6 +494,75 @@ Einfach ausgedrückt: wenn wir uns mit einem Task verbinden wollen, müssen wir 
 Damit kommt es jedoch auch dazu, dass der load balancer von Swarm uns bei mehreren Anfragen auf unterschiedliche Tasks routet (da es sich um einen OSi-Layer 3 load balancer handelt). Um dieses Problem zu beheben wird noch ein zusätzlicher proxy load balancer (OSi-Layer 4) benötigt. Dieses Problem tritt nur auf wenn es von einem Service mehrere Replicas gibt.
 
 ## Example Voting App
+
+![architecture](assets/img/architecture.png)
+
+### Services
+
+- vote
+  - bretfisher/examplevotingapp_vote
+  - web front end for users to vote dog/cat
+  - ideally published on TCP 80. Container listens on 80
+  - on frontend network
+  - 2+ replicas of this container
+
+- redis
+  - redis:3.2
+  - key/value storage for incoming votes
+  - no public ports
+  - on frontend network
+  - 1 replica
+
+- worker
+  - bretfisher/examplevotingapp_worker
+  - backend processor of redis and storing results in postgres
+  - no public ports
+  - on frontend and backend networks
+  - 1 replica
+
+- db
+  - postgres:9.4
+  - one named volume needed, pointing to /var/lib/postgresql/data
+  - on backend network
+  - 1 replica
+  - remember set env for password-less connections -e POSTGRES_HOST_AUTH_METHOD=trust
+
+- result
+  - bretfisher/examplevotingapp_result
+  - web app that shows results
+  - runs on high port since just for admins (lets imagine)
+  - so run on a high port of your choosing (I choose 5001), container listens on 80
+  - on backend network
+  - 1 replica
+
+### Steps
+
+```console
+$ docker swarm init
+```
+
+Danach alle Nodes zum Swarm hinzufügen und anschließend die Netzwerke erstellen:
+
+```console
+$ docker network create --driver overlay fontend
+
+$ docker network create --driver overlay backend
+```
+
+Als nächstes die Services erstellen:
+
+```console
+$ docker service create --replicas 2 --name vote -p 80:80 --network frontend bretfisher/examplevotingapp_vote
+
+$ docker service create --name redis --network frontend redis:3.2
+
+$ docker service create --name worker --network frontend --network backend bretfisher/examplevotingapp_worker
+
+$ docker service create --name db --network backend --mount type=volume,source=db-data,target=/var/lib/postgresql/data -e POSTGRES_HOST_AUTH_METHOD=trust postgres:9.4
+
+$ docker service create --name result -p 5001:80 --network backend bretfisher/examplevotingapp_result
+```
+Danach sollte die Voting App auf Port 80 verfügbar sein und unter Port 5001 das live Ergebniss.
 
 # Kubernetes
 
