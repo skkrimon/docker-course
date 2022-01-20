@@ -26,13 +26,13 @@ services:
   vote:
     image: bretfisher/examplevotingapp_vote
     ports:
-      - 5000:80
+      - 5000:5000
     networks:
       - frontend
     depends_on:
       - redis
     deploy:
-      replicas: 2
+      replicas: 5
       update_config:
         parallelism: 2
       restart_policy:
