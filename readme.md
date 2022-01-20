@@ -6,6 +6,7 @@
 - [Docker](#docker)
 - [Docker Compose](#docker-compose)
 - [Docker Swarm](#docker-swarm)
+- [Container Registries](#container-registries)
 - [Kubernetes](#kubernetes)
 - [Notizen](#notizen)
 - [Inhaltsverzeichnis](#inhaltsverzeichnis)
@@ -446,8 +447,14 @@ volumes:
     - [Über die Konsole](#über-die-konsole)
   - [Verwenden von Secrets](#verwenden-von-secrets-am-beispiel-postgres)
   - [Verwenden von Secrets mit Stacks](#verwenden-von-secrets-mit-stacks)
-- [Service Updates](#secrets-storage)
-- 
+- [Service Updates](#service-updates)
+- [Docker Healthchecks](#--docker-healthchecks)
+  - [Docker Run Beispiel](#healthcheck-docker-run-beispiel)
+  - [Dockerfile Beispiel](#healthcheck-dockerfile-beispiel)
+    - [Healthcheck Nginx Dockerfile](#healthcheck-in-nginx-dockerfile)
+    - [Healthcheck Postgres Dockerfile](#healthcheck-in-postgres-dockerfile)
+  - [Compose/Stack Beispiel](#composestack-beispiel)
+  
 -------
 
 ## Übersicht Docker Swarm
@@ -825,6 +832,91 @@ Beim updaten von Stacks sollte darauf verzichtet werden Updates direkt über die
 - Wird innerhalb des Containers ausgeführt
 - Erwartet exit 0 (OK) oder exit 1 (error)
 - 3 container states: starting, healthy, unhealthy
+- Aktueller Healthcheck wird bei `docker container ls` angezeigt
+- Die letzten 5 Healthchecks können mit `docker container inspect` eingesehen werden
+- Services ersetzen den jeweiligen Task wenn der healthcheck fehlschlägt
+- Service updates wartet auf den healthcheck bevor das Update fortgesetzt wird
+
+### Healthcheck Docker Run Beispiel
+
+```console
+$ docker run \
+  --health-cmd="curl -f localhost:9200/_cluster/health || false" \
+  --health-interval=5s \
+  --health-retries=2 \
+  --health-timeout=2s \
+  --health-start-period=15s \
+  elasticsearch:2
+```
+
+### Healthcheck Dockerfile Beispiel
+
+```dockerfile
+HEALTHCHECK --interval=5m --timeout=3s \
+  CMD curl -f http://localhost/ || false
+```
+
+Verfügbar Optionen:
+
+- --interval=DURATION (default: 30s)
+- --timeout=DURATION (default: 30s)
+- --start-period=DURATION (default: 0s)
+- --retries=N (default: 3)
+
+#### Healthcheck in Nginx Dockerfile
+
+```dockerfile
+FROM nginx:1.13
+
+HEALTHCHECK --interval=30s --timeout=3s \
+  CMD curl -f http://localhost/ || exit 1
+```
+
+#### Healthcheck in Postgres Dockerfile
+
+```dockerfile
+FROM postgres:latest
+
+# specify real user with -U to prevent errors in log
+
+HEALTHCHECK --interval=5s --timeout=3s \
+  CMD pg_isready -U postgres || exit 1
+```
+
+### Compose/Stack Beispiel
+
+```yaml
+version: '2.1'    # min. Version für healthchecks
+
+services: 
+  web:
+    image: nginx:latest
+    healthcheck:
+      test: ["CMD","curl","-f","http://localhost"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 2
+      start_period: 1m    # min. Version 3.4
+```
+
+# Container Registries
+
+## Docker Hub
+
+- Größte öffentliche image registry
+- Erlaubt es Images zu bauen
+- Verlinkung zu GitHub/BitBucket um automatisch Images zu bauen bei commit
+- Verkettung von Image Builds
+- Dockers standard registry
+
+## Docker Registry
+
+- Eine private registry für das eigene Netzwerk
+- Im Vergleich zu Docker Hub nur sehr wenige Features
+- Im Kern eine web API
+- Kann in der Cloud deployed werden
+
+[Link](https://hub.docker.com/_/registry) zum offiziellen Image.
 
 # Kubernetes
 
@@ -921,6 +1013,14 @@ $ docker service update --force web
   - [Service Updates](#service-updates)
     - [Update Beispiele](#update-beispiele)
   - [Docker Healthchecks](#docker-healthchecks)
+    - [Healthcheck Docker Run Beispiel](#healthcheck-docker-run-beispiel)
+    - [Healthcheck Dockerfile Beispiel](#healthcheck-dockerfile-beispiel)
+      - [Healthcheck in Nginx Dockerfile](#healthcheck-in-nginx-dockerfile)
+      - [Healthcheck in Postgres Dockerfile](#healthcheck-in-postgres-dockerfile)
+    - [Compose/Stack Beispiel](#composestack-beispiel)
+- [Container Registries](#container-registries)
+  - [Docker Hub](#docker-hub)
+  - [Docker Registry](#docker-registry)
 - [Kubernetes](#kubernetes)
 - [Notizen](#notizen)
   - [Port vergabe](#port-vergabe)
