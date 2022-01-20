@@ -17,7 +17,8 @@ services:
       - psql_user
       - psql_password
     environment:
-      - POSTGRES_PASSWORD=123456
+      - POSTGRES_USER_FILE=/tun/var/secrets/psql_user
+      - POSTGRES_PASSWORD_FILE=/run/var/secrets/psql_password
     volumes:
       - drupal-data:/var/lib/postgresql/data
 
