@@ -446,7 +446,8 @@ volumes:
     - [Über die Konsole](#über-die-konsole)
   - [Verwenden von Secrets](#verwenden-von-secrets-am-beispiel-postgres)
   - [Verwenden von Secrets mit Stacks](#verwenden-von-secrets-mit-stacks)
-
+- [Service Updates](#secrets-storage)
+- 
 -------
 
 ## Übersicht Docker Swarm
@@ -798,6 +799,33 @@ volumes:
   drupal-data:
 ```
 
+## Service Updates
+
+- Ermöglich 'rolling replacement'* von Tasks/Containern in einem Service
+- Bei den meisten Änderungen werden Container ersetzt
+- rollback und healthcheck Optionen
+- stack deploy bei einem bereits existierenden Stack triggert ein Update
+
+**ein Container nach dem anderen wird geupdatet um downtime zu minimieren*
+
+### Update Beispiele
+
+- Ein Image auf eine neue Version updaten:
+  - `docker service update --image myapp:1.2.1 <servicename>`
+- Hinzufügen einer Umgebungsvariable und entfernen eines Ports:
+  - `docker service update --env-add NODE_ENV=production --publish-rm 8080`
+- Anzahlen der Replicas von zwei Servicen ändern:
+  - `docker service scale web=8 api=6`
+
+Beim updaten von Stacks sollte darauf verzichtet werden Updates direkt über die CLI durchzuführen, sondern man sollte es immer in der compose Datei ändern.
+
+## Docker Healthchecks
+
+- Unterstützt in Dockerfile, Compose YAML, docker run und Swarm Services
+- Wird innerhalb des Containers ausgeführt
+- Erwartet exit 0 (OK) oder exit 1 (error)
+- 3 container states: starting, healthy, unhealthy
+
 # Kubernetes
 
 # Notizen
@@ -833,6 +861,12 @@ Mit --help können weitere Infos zu breinigen ausgegeben werden.
 
 # example:
 --mount type=volume,source=db-data,target=/var/lib/postgresql/data
+```
+
+## Rebalance Nodes Docker Swarm
+
+```console
+$ docker service update --force web
 ```
 
 # Inhaltsverzeichnis
@@ -884,9 +918,13 @@ Mit --help können weitere Infos zu breinigen ausgegeben werden.
       - [Über die Konsole](#über-die-konsole)
     - [Verwenden von Secrets (am Beispiel Postgres)](#verwenden-von-secrets-am-beispiel-postgres)
     - [Verwenden von Secrets mit Stacks](#verwenden-von-secrets-mit-stacks)
+  - [Service Updates](#service-updates)
+    - [Update Beispiele](#update-beispiele)
+  - [Docker Healthchecks](#docker-healthchecks)
 - [Kubernetes](#kubernetes)
 - [Notizen](#notizen)
   - [Port vergabe](#port-vergabe)
   - [System bereinigen](#system-bereinigen)
   - [Named Volumes in Docker Swarm](#named-volumes-in-docker-swarm)
+  - [Rebalance Nodes Docker Swarm](#rebalance-nodes-docker-swarm)
 - [Inhaltsverzeichnis](#inhaltsverzeichnis)
