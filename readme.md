@@ -8,6 +8,7 @@
 - [Docker Swarm](#docker-swarm)
 - [Kubernetes](#kubernetes)
 - [Notizen](#notizen)
+- [Inhaltsverzeichnis](#inhaltsverzeichnis)
 
 # Docker
 
@@ -426,6 +427,7 @@ volumes:
 
 # Docker Swarm
 
+<!-- no toc -->
 - [Übersicht Docker Swarm](#übersicht-docker-swarm)
 - [Docker Swarm aktivieren](#docker-swarm-aktivieren)
 - [Erstellen eines 3-Node Swarm](#erstellen-eines-3-node-swarm)
@@ -442,6 +444,7 @@ volumes:
   - [Erstellen eines Secrets](#erstellen-eines-secrets)
     - [Mit einer Datei](#mit-einer-datei)
     - [Über die Konsole](#über-die-konsole)
+  - [Verwenden von Secrets](#verwenden-von-secrets-am-beispiel-postgres)
 
 -------
 
@@ -741,6 +744,15 @@ $ docker secret create SECRET_NAME SECRET_FILE
 $ echo "SECRET" | docker secret create SECRET_NAME -
 ```
 
+### Verwenden von Secrets (am Beispiel Postgres)
+
+```console
+docker service create --name psql \
+  --secret psql_user --secret psql_pass -e \
+  POSTGRES_PASSWORD_FILE=/run/secrets/psql_pass \
+  POSTGRES_USER_FILE=/run/secrets/psql_user postgres
+```
+
 # Kubernetes
 
 # Notizen
@@ -777,3 +789,58 @@ Mit --help können weitere Infos zu breinigen ausgegeben werden.
 # example:
 --mount type=volume,source=db-data,target=/var/lib/postgresql/data
 ```
+
+# Inhaltsverzeichnis
+
+- [Docker Mastery](#docker-mastery)
+  - [Content](#content)
+- [Docker](#docker)
+  - [Container](#container)
+    - [Erstellen eines Containers](#erstellen-eines-containers)
+    - [Wichtige CLI-Befehle](#wichtige-cli-befehle)
+    - [Inspizieren von Containern](#inspizieren-von-containern)
+    - [Mit Containern interagieren](#mit-containern-interagieren)
+  - [Docker Netzwerke](#docker-netzwerke)
+    - [CLI-Management](#cli-management)
+    - [DNS](#dns)
+    - [DNS Round Robin](#dns-round-robin)
+  - [Images](#images)
+    - [Tags](#tags)
+    - [Erstellen von Images](#erstellen-von-images)
+    - [Build Images](#build-images)
+    - [Extending Images](#extending-images)
+  - [Volumes](#volumes)
+    - [Container Lifetime & Persistent Data](#container-lifetime--persistent-data)
+    - [Named Volumes](#named-volumes)
+    - [Bind Mounts](#bind-mounts)
+- [Docker Compose](#docker-compose)
+  - [Übersicht Docker Compose](#übersicht-docker-compose)
+  - [docker-compose.yml](#docker-composeyml)
+  - [docker-compose CLI](#docker-compose-cli)
+  - [Beispiel Konfiguration](#beispiel-konfiguration)
+  - [Build Images mit Compose](#build-images-mit-compose)
+    - [Beispiel](#beispiel)
+- [Docker Swarm](#docker-swarm)
+  - [Übersicht Docker Swarm](#übersicht-docker-swarm)
+  - [Docker Swarm aktivieren](#docker-swarm-aktivieren)
+  - [Erstellen eines 3-Node Swarm](#erstellen-eines-3-node-swarm)
+  - [Overlay Networking](#overlay-networking)
+  - [Routing Mesh](#routing-mesh)
+  - [Example Voting App](#example-voting-app)
+    - [Services](#services)
+    - [Steps](#steps)
+  - [Swarm Stack](#swarm-stack)
+    - [CLI Befehle](#cli-befehle)
+    - [Beispiel eines Stacks](#beispiel-eines-stacks)
+  - [Swarm Secrets](#swarm-secrets)
+    - [Secrets Storage](#secrets-storage)
+    - [Erstellen eines Secrets](#erstellen-eines-secrets)
+      - [Mit einer Datei](#mit-einer-datei)
+      - [Über die Konsole](#über-die-konsole)
+    - [Verwenden von Secrets (am Beispiel Postgres)](#verwenden-von-secrets-am-beispiel-postgres)
+- [Kubernetes](#kubernetes)
+- [Notizen](#notizen)
+  - [Port vergabe](#port-vergabe)
+  - [System bereinigen](#system-bereinigen)
+  - [Named Volumes in Docker Swarm](#named-volumes-in-docker-swarm)
+- [Inhaltsverzeichnis](#inhaltsverzeichnis)
