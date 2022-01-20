@@ -758,6 +758,46 @@ docker service create --name psql \
 
 ### Verwenden von Secrets mit Stacks
 
+```yaml
+version: '3.1' # min. für Secrets
+
+services:
+  drupal:
+    image: drupal:8.2
+    ports:
+      - '8080:80'
+    volumes:
+      - drupal-modules:/var/www/html/modules
+      - durpal-profiles:/var/www/html/profiles
+      - drupal-themes:/var/www/html/themes
+      - drupal-sites:/var/www/html/sites
+
+  database:
+    image: postgres:12.1
+    secrets:    # gibt dem Service Zugriff auf die jweiligen Secrets
+      - psql_user
+      - psql_password
+    environment:
+      - POSTGRES_USER_FILE=/run/secrets/psql_user
+      - POSTGRES_PASSWORD_FILE=/run/secrets/psql_password
+    volumes:
+      - drupal-data:/var/lib/postgresql/data
+
+secrets:
+  psql_user:
+    external: true  # wenn das Secret im Swarm bereits vorhanden ist
+                    # beispielsweise wenn es über die CLI erstellt wurde
+  psql_password: 
+    file: ./psql_password.txt   # wenn das Secret aus einer Datei kommt 
+
+volumes:
+  drupal-modules:
+  durpal-profiles:
+  drupal-themes:
+  drupal-sites:
+  drupal-data:
+```
+
 # Kubernetes
 
 # Notizen
