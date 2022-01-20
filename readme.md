@@ -435,6 +435,8 @@ volumes:
   - [Services](#services)
   - [Steps](#steps)
 - [Swarm Stack](#swarm-stack)
+  - [CLI Befehle](#cli-befehle)
+  - [Beispiel eines Stacks](#beispiel-eines-stacks)
 
 -------
 
@@ -576,6 +578,133 @@ Swarm Stack ist im Prinzip Compose auf der Produktions Ebene.
 - docker-compose CLI wird auf einem Swarm Server nicht benötigt
 
 *build sollte niemals in Produktion stattfinden*
+
+### CLI Befehle
+
+Deployen/Updaten eines Stacks:
+
+```console
+$ docker stack deploy -c COMPOSE_FILE_NAME STACK_NAME
+```
+
+Auflisten aller Stacks:
+
+```console
+$ docker stack ls
+```
+
+Auflisten der Services eines Stacks:
+
+```console
+$ docker stack services STACK_NAME
+```
+
+Entfernen eines Stacks:
+
+```console
+$ docker stack rm STACK_NAME
+```
+
+### Beispiel eines Stacks
+
+```yaml
+version: "3"
+services:
+
+  redis:
+    image: redis:alpine
+    networks:
+      - frontend
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
+  db:
+    image: postgres:9.4
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - backend
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+  vote:
+    image: bretfisher/examplevotingapp_vote
+    ports:
+      - 5000:5000
+    networks:
+      - frontend
+    depends_on:
+      - redis
+    deploy:
+      replicas: 5
+      update_config:
+        parallelism: 2
+      restart_policy:
+        condition: on-failure
+
+  result:
+    image: bretfisher/examplevotingapp_result
+    ports:
+      - 5001:80
+    networks:
+      - backend
+    depends_on:
+      - db
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
+  worker:
+    image: bretfisher/examplevotingapp_worker
+    networks:
+      - frontend
+      - backend
+    depends_on:
+      - db
+      - redis
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels: [APP=VOTING]
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+      placement:
+        constraints: [node.role == manager]
+
+  visualizer:
+    image: bretfisher/visualizer
+    ports:
+      - 8080:8080
+    stop_grace_period: 1m30s
+    networks:
+      - frontend
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+networks:
+  frontend:
+  backend:
+
+volumes:
+  db-data:
+```
 
 # Kubernetes
 
