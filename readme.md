@@ -706,6 +706,22 @@ volumes:
   db-data:
 ```
 
+## Swarm Secrets
+
+### Secrets Storage
+
+- Einfachste sichere Lösung um Secrets in Swarm zu speichern
+- Was sind Secrets?
+  - Benutzernamen und Passwörter
+  - TLS Zertifikate und keys
+  - API Keys
+  - SSH Keys
+  - Alle Daten auf die Nutzer nicht einsehen dürfen
+- Supportet strings oder binäre Datein bis 500Kb
+- Apps müssen nicht umgebaut werden um diese Funktion zu nutzen
+- Secrets werden erst in Swarm gespeichert und dann dem Service zugewiesen
+- /run/secrets/<secret_name> oder /run/secrets/<secret_alias>
+
 # Kubernetes
 
 # Notizen
