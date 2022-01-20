@@ -445,6 +445,7 @@ volumes:
     - [Mit einer Datei](#mit-einer-datei)
     - [Über die Konsole](#über-die-konsole)
   - [Verwenden von Secrets](#verwenden-von-secrets-am-beispiel-postgres)
+  - [Verwenden von Secrets mit Stacks](#verwenden-von-secrets-mit-stacks)
 
 -------
 
@@ -730,6 +731,8 @@ volumes:
 - Secrets werden erst in Swarm gespeichert und dann dem Service zugewiesen
 - /run/secrets/<secret_name> oder /run/secrets/<secret_alias>
 
+Secrets können mit `docker service update --secret-rm` entfernt oder mit `docker service update --secret-add` hinzugefügt werden. *ACHTUNG*: Dabei wird der Container neu erstellt!
+
 ### Erstellen eines Secrets
 
 #### Mit einer Datei
@@ -752,6 +755,8 @@ docker service create --name psql \
   POSTGRES_PASSWORD_FILE=/run/secrets/psql_pass \
   POSTGRES_USER_FILE=/run/secrets/psql_user postgres
 ```
+
+### Verwenden von Secrets mit Stacks
 
 # Kubernetes
 
@@ -838,6 +843,7 @@ Mit --help können weitere Infos zu breinigen ausgegeben werden.
       - [Mit einer Datei](#mit-einer-datei)
       - [Über die Konsole](#über-die-konsole)
     - [Verwenden von Secrets (am Beispiel Postgres)](#verwenden-von-secrets-am-beispiel-postgres)
+    - [Verwenden von Secrets mit Stacks](#verwenden-von-secrets-mit-stacks)
 - [Kubernetes](#kubernetes)
 - [Notizen](#notizen)
   - [Port vergabe](#port-vergabe)
