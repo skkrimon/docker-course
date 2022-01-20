@@ -6,7 +6,6 @@
 - [Docker](#docker)
 - [Docker Compose](#docker-compose)
 - [Docker Swarm](#docker-swarm)
-- [Container Registries](#container-registries)
 - [Kubernetes](#kubernetes)
 - [Notizen](#notizen)
 - [Inhaltsverzeichnis](#inhaltsverzeichnis)
@@ -899,25 +898,6 @@ services:
       start_period: 1m    # min. Version 3.4
 ```
 
-# Container Registries
-
-## Docker Hub
-
-- Größte öffentliche image registry
-- Erlaubt es Images zu bauen
-- Verlinkung zu GitHub/BitBucket um automatisch Images zu bauen bei commit
-- Verkettung von Image Builds
-- Dockers standard registry
-
-## Docker Registry
-
-- Eine private registry für das eigene Netzwerk
-- Im Vergleich zu Docker Hub nur sehr wenige Features
-- Im Kern eine web API
-- Kann in der Cloud deployed werden
-
-[Link](https://hub.docker.com/_/registry) zum offiziellen Image.
-
 # Kubernetes
 
 # Notizen
@@ -960,6 +940,25 @@ Mit --help können weitere Infos zu breinigen ausgegeben werden.
 ```console
 $ docker service update --force web
 ```
+
+## Container Registries
+
+### Docker Hub
+
+- Größte öffentliche image registry
+- Erlaubt es Images zu bauen
+- Verlinkung zu GitHub/BitBucket um automatisch Images zu bauen bei commit
+- Verkettung von Image Builds
+- Dockers standard registry
+
+### Docker Registry
+
+- Eine private registry für das eigene Netzwerk
+- Im Vergleich zu Docker Hub nur sehr wenige Features
+- Im Kern eine web API
+- Kann in der Cloud deployed werden
+
+[Link](https://hub.docker.com/_/registry) zum offiziellen Image.
 
 # Inhaltsverzeichnis
 
@@ -1018,13 +1017,13 @@ $ docker service update --force web
       - [Healthcheck in Nginx Dockerfile](#healthcheck-in-nginx-dockerfile)
       - [Healthcheck in Postgres Dockerfile](#healthcheck-in-postgres-dockerfile)
     - [Compose/Stack Beispiel](#composestack-beispiel)
-- [Container Registries](#container-registries)
-  - [Docker Hub](#docker-hub)
-  - [Docker Registry](#docker-registry)
 - [Kubernetes](#kubernetes)
 - [Notizen](#notizen)
   - [Port vergabe](#port-vergabe)
   - [System bereinigen](#system-bereinigen)
   - [Named Volumes in Docker Swarm](#named-volumes-in-docker-swarm)
   - [Rebalance Nodes Docker Swarm](#rebalance-nodes-docker-swarm)
+  - [Container Registries](#container-registries)
+    - [Docker Hub](#docker-hub)
+    - [Docker Registry](#docker-registry)
 - [Inhaltsverzeichnis](#inhaltsverzeichnis)
