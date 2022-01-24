@@ -938,7 +938,7 @@ $ kubectl scale deployment my-apache --replicas 2
 $ kubectl get all
 ```
 
-## Services
+## Kubernetes Services
 
 - `kubectl expose` erstellt einen neuen Service für bereits existierende Pods
 - ein Service ist eine stabile Addresse für Pods
@@ -1071,7 +1071,7 @@ $ docker service update --force web
 - [Kubernetes](#kubernetes)
   - [Run, Create & Apply](#run-create--apply)
     - [Weiter CLI-Befehle](#weiter-cli-befehle)
-  - [Services](#services-1)
+  - [Kubernetes Services](#kubernetes-services)
 - [Notizen](#notizen)
   - [Port vergabe](#port-vergabe)
   - [System bereinigen](#system-bereinigen)
