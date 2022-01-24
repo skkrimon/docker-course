@@ -1,6 +1,5 @@
 # Docker Mastery
 
-
 ## Content
 
 - [Docker](#docker)
@@ -900,6 +899,56 @@ services:
 
 # Kubernetes
 
+- Kubernetes = das komplette Orchestration System
+  - K8s = kurzer Name von Kubernetes
+- Kubectl = CLI Tool zum konfigurieren von Kubernetes und managen von Apps
+- Node = einzelner Server im Kubernets Cluster
+- Kubelet = Kubernetes agent der auf den Nodes läuft
+- Control Plane (Master) = Container die das Cluster managen
+  - Beinhaltet API Server, scheduler, controller manager, etcd und mehr
+
+![Kubernetes Architektur](https://www.scaleuptech.com/de/wp-content/uploads/2019/03/kubernetes_archiketktur_blog.jpg)
+
+## Run, Create & Apply
+
+- Drei Möglichkeiten um Pods mittels CLI zu erstellen
+  - `kubectl run` für die Erstellung von einem Pod
+  - `kubectl create` Erstellung von Resourcen via CLi oder YAML
+  - `kubectl apply` etwas erstellen/updaten via YAML
+
+Ein neues deployment für einen Pod starten
+
+```console
+$ kubectl create deployment my-apache --image httpd
+```
+
+Einen weiteren Pod hinzufügen
+
+```bash
+$ kubectl scale deploy/my-apache --replicas 2
+
+# oder
+
+$ kubectl scale deployment my-apache --replicas 2
+```
+
+### Weiter CLI-Befehle
+
+```
+$ kubectl get all
+```
+
+## Services
+
+- `kubectl expose` erstellt einen neuen Service für bereits existierende Pods
+- ein Service ist eine stabile Addresse für Pods
+- wenn man sich mit Pods verbinden möchte werden Pods benötigt
+- Es gibt folgende Service Arten:
+  - ClusterIP
+  - NodePort
+  - LoadBalancer
+  - ExternalName
+
 # Notizen
 
 ## Port vergabe
@@ -939,6 +988,8 @@ Mit --help können weitere Infos zu breinigen ausgegeben werden.
 
 ```console
 $ docker service update --force web
+
+
 ```
 
 ## Container Registries
@@ -1018,6 +1069,9 @@ $ docker service update --force web
       - [Healthcheck in Postgres Dockerfile](#healthcheck-in-postgres-dockerfile)
     - [Compose/Stack Beispiel](#composestack-beispiel)
 - [Kubernetes](#kubernetes)
+  - [Run, Create & Apply](#run-create--apply)
+    - [Weiter CLI-Befehle](#weiter-cli-befehle)
+  - [Services](#services-1)
 - [Notizen](#notizen)
   - [Port vergabe](#port-vergabe)
   - [System bereinigen](#system-bereinigen)

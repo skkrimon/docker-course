@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <title>K8s</title>
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            background-color: #292929;
+        }
+
+        .box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .box div {
+            width: 100px;
+            height: 100px;
+        }
+
+        .rotate {
+            animation: rotation 20s infinite linear;
+            background-color: transparent;
+            margin-top: 30px;
+        }
+
+        p {
+            font-weight: bolder;
+            font-size: xx-large;
+        }
+
+        @keyframes rotation {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(359deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <img class="rotate" src="https://seeklogo.com/images/K/kubernetes-logo-3A67038EAB-seeklogo.com.png" alt="kubernetes">
+    </div>
+    <p class="box">Kubernetes Test Image</p>
+    <p class="box">Version 1.0.0</p>
+</body>
+</html>

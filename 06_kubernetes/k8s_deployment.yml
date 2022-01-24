@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s
+  labels:
+    app: sample-k8s
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: sample-k8s
+  template:
+    metadata:
+      labels:
+        app: sample-k8s
+    spec:
+      containers:
+      - name: sample-k8s
+        image: skkrimon/k8s:latest
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
